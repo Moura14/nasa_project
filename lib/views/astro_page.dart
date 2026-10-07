@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:nasa/controllers/apod_controller.dart';
 
@@ -32,7 +34,7 @@ class _AstroPageState extends State<AstroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Imagens Astronômicas")),
+      appBar: AppBar(title: Text("Imagens Astronômicas do Dia")),
       body: _buildBody()
     );
   }
@@ -93,10 +95,9 @@ class _AstroPageState extends State<AstroPage> {
                 apod.hdurl, fit: BoxFit.cover, width: double.infinity,
                 loadingBuilder: (context, child, loadingProgress){
                   if(loadingProgress == null) return child;
-                  return Container(
-                    height: 300,
-                    color: Colors.grey,
-                    child: const Center(child: CircularProgressIndicator()),
+                  return BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                    child: Container(),
                   );
                 },
                 errorBuilder: (context, error, stackTrace){
